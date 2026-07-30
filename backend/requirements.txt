@@ -1,0 +1,111 @@
+# ============================================================
+# backend/requirements.txt
+# ============================================================
+#
+# 📖 WHAT IS THIS FILE?
+# Lists every Python package our backend needs.
+# `pip install -r requirements.txt` installs ALL of them at once.
+#
+# 📖 WHY PIN VERSIONS (e.g., fastapi==0.115.0)?
+# Pinning versions means: "install exactly THIS version, no newer."
+# This prevents a surprise breaking change from a package update
+# from breaking your production app. Critical for reliability.
+# ============================================================
+
+# ── Web Framework ──────────────────────────────────────────
+# FastAPI: our async Python web framework
+# Think of it like Express.js but for Python, with auto-generated docs
+fastapi==0.115.0
+
+# Uvicorn: ASGI server that runs FastAPI
+# ASGI = Asynchronous Server Gateway Interface (handles async requests)
+uvicorn[standard]==0.30.6
+
+# python-multipart: needed for file upload support in FastAPI
+python-multipart==0.0.9
+
+# ── Database ───────────────────────────────────────────────
+# SQLAlchemy: Python ORM (Object-Relational Mapper)
+# Lets us write Python classes instead of raw SQL
+# e.g., Campaign.query.filter_by(status='ACTIVE') instead of SELECT * FROM...
+sqlalchemy==2.0.35
+
+# asyncpg: Async PostgreSQL driver (works with SQLAlchemy async mode)
+# "async" means the server doesn't BLOCK while waiting for DB — handles more requests
+asyncpg==0.29.0
+
+# Alembic: Database migration tool
+# When you change a model (e.g., add a column), Alembic generates
+# SQL migration scripts so you don't lose existing data
+alembic==1.13.3
+
+# psycopg2-binary: Sync PostgreSQL driver (used by Alembic for migrations)
+psycopg2-binary==2.9.9
+
+# ── Cache & Queue ──────────────────────────────────────────
+# redis: Python client for Redis
+redis==5.0.8
+
+# celery: Distributed task queue — runs background jobs
+# e.g., "run this AI agent in the background, don't block the HTTP response"
+celery==5.4.0
+
+# ── AI / LLM ───────────────────────────────────────────────
+# LangChain: Framework for building LLM applications
+# Provides: prompt templates, chains, memory, tool calling
+langchain==0.3.7
+
+# LangChain OpenAI integration — connects LangChain to GPT-4o
+langchain-openai==0.2.9
+
+# LangChain Google integration — connects LangChain to Gemini
+langchain-google-genai==2.0.7
+
+# LangGraph: Multi-agent orchestration as a state machine graph
+# This is the CORE of our agent system — defines how agents
+# pass messages and state to each other
+langgraph==0.2.50
+
+# LangSmith: Observability for LangChain/LangGraph
+# Traces every agent step, tool call, prompt, and response
+langsmith==0.1.140
+
+# OpenAI Python client — for direct API calls (DALL-E, Embeddings)
+openai==1.55.3
+
+# ── Data Validation ────────────────────────────────────────
+# Pydantic: Data validation using Python type hints
+# FastAPI uses Pydantic for request/response schemas
+# e.g., if a field says "int" and someone sends "abc" → auto-error
+pydantic==2.9.2
+pydantic-settings==2.6.1  # Load config from .env files
+
+# ── Security ───────────────────────────────────────────────
+# python-jose: JWT (JSON Web Token) creation and verification
+# Used for user authentication
+python-jose[cryptography]==3.3.0
+
+# passlib: Password hashing library
+# NEVER store plain-text passwords — always hash them
+passlib[bcrypt]==1.7.4
+
+# ── HTTP & WebSockets ──────────────────────────────────────
+# httpx: Async HTTP client (for calling external APIs)
+httpx==0.27.2
+
+# websockets: WebSocket support (for real-time agent streaming)
+websockets==13.1
+
+# python-socketio: Socket.IO server (more features than raw WebSockets)
+python-socketio==5.11.3
+
+# ── Utilities ──────────────────────────────────────────────
+# python-dotenv: Load .env files into environment variables
+python-dotenv==1.0.1
+
+# tenacity: Retry logic with exponential backoff
+# When an API call fails, retry it automatically with increasing delays
+tenacity==9.0.0
+
+# structlog: Structured logging (JSON logs, easier to search in production)
+structlog==24.4.0
